@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Display</title>
+    <style>
+        body{text-align: center;}
+        #findDetails {background-color:aquamarine}
+        #displayDetails1 {float: left; width: 50%; background-color: aquamarine; color: black;}
+        #displayDetails2 {float: right; width: 50%; background-color: aquamarine; color: black;}
+        input {width: 120px;}
+    </style>
+</head>
+<body>
+
+    <div id="findDetails">
+        <h1>Display all Users</h1>
+        <button id="find">View</button>
+
+    </div>
+    
+   
+
+    <div id="displayDetails1">
+        <h3 id="FN1" type="text"></h3> <br><br>
+        <img id="image1" src=" ">
+
+    </div>
+
+    <div id="displayDetails2">
+        <h3 id="FN2" type="text"></h3> <br><br>
+        <img id="image2" src=" ">
+
+    </div>
+
+    <div>
+        <iframe src="https://thunkable.site/w/kFTVErcTgNfALI-3j8Qtp" title="loginApp" height = 730 width = 410></iframe>
+    </div>
+
+    <div style="position: relative; width: 100%; height: 0; padding-top: 33.3333%;
+    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+    border-radius: 8px; will-change: transform;">
+    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFvvC2_Bnk&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+    </iframe>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAX_OUqsxjMRSuz3_pDacEiP-OfVyHePiU",
+          authDomain: "login-app-6a16e.firebaseapp.com",
+          databaseURL: "https://login-app-6a16e-default-rtdb.firebaseio.com",
+          projectId: "login-app-6a16e",
+          storageBucket: "login-app-6a16e.appspot.com",
+          messagingSenderId: "269849390183",
+          appId: "1:269849390183:web:32a192421110752d5978c2",
+          measurementId: "G-4XSVERTKED"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import {getDatabase, ref, get, set, child, update, remove}
+        from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
+
+
+        const db = getDatabase();
+        
+        //const image1 = document.getElementById("#image1");
+        //const image2 = document.getElementById("#image2");
+
+        var findName = document.querySelector("#FN1");
+        var findName2 = document.querySelector("#FN2");
+        var findImageUrl = document.querySelector("FindImageUrl");
+
+        var findBtn = document.querySelector("#find");
+
+        function FindData() {
+            const dbref = ref(db);
+
+            //first profile
+            get(child(dbref, "M4ncBIvYGwR0HDRrSiO3xj9CoDi1"))
+            .then((snapshot)=>{
+                if (snapshot.exists()) {
+                    findName.innerHTML = "Name: " + snapshot.val().name;
+                    image1.src = snapshot.val().image;
+                }else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)            
+            })
+
+            //second profile
+            get(child(dbref, "an5WrOFXktgNuZZdlv8PROvCzoD2"))
+            .then((snapshot)=>{
+                if(snapshot.exists()) {
+                    findName2.innerHTML = "Name: " + snapshot.val().name;
+                    image2.src = snapshot.val().image;
+                } else {
+                    alert("no data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+            
+        }
+
+        findBtn.addEventListener('click', FindData);
+
+
+      </script>
+</body>
+</html>
